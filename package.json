@@ -5,7 +5,7 @@
     "main": "Games.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node Game.js"
+        "start": "node Games.js"
     },
     "author": "cx",
     "license": "ISC",
