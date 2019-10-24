@@ -5,6 +5,20 @@ const Game = require('./database');
 
 const API_KEY = "5865e092b3bb33ca3807c709e8f3abeb";
 
+//const path = require('path'); //---heroku---
+const cors = require("cors");
+const port = 2000 || process.env.PORT;
+
+app.use(cors());
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    );
+    next();
+});
+
 companies = (data) => {
 
     axios({
@@ -32,7 +46,6 @@ companies = (data) => {
 //get game from API and add to database
 app.get('/create', (req, res) => {
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     const name = req.query.name;
 
     var genresArray = [];
@@ -172,9 +185,8 @@ app.get('/create', (req, res) => {
 //get all games from database
 app.get('/games', (req, res) => {
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
-    Game.find({}).sort({'_id': -1}).then(response => {
+    Game.find({}).sort({ '_id': -1 }).then(response => {
 
         res.status(200).json(response);
     }).catch(error => {
@@ -186,7 +198,6 @@ app.get('/games', (req, res) => {
 
 app.get('/findgame', (req, res) => {
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
     const name = req.query.name;
 
@@ -204,7 +215,6 @@ app.get('/findgame', (req, res) => {
 //find game in APi
 app.get('/findgameAPI', (req, res) => {
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     const name = req.query.name;
 
     axios({
@@ -234,7 +244,6 @@ app.get('/findgameAPI', (req, res) => {
 //delete game from database
 app.get('/delete', (req, res) => {
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     const id = req.query.id;
 
     Game.deleteOne({ id: `${id}` }).then(response => {
@@ -273,4 +282,6 @@ app.get('/update', (req, res) => {
 
 
 
-app.listen(5000);
+app.listen(port, () => {
+    console.log(`server is listening on port ${port}`);
+});
