@@ -5,35 +5,43 @@ const Game = require('./database');
 
 const API_KEY = "5865e092b3bb33ca3807c709e8f3abeb";
 
+//const path = require('path'); //---heroku---
+const cors = require("cors");
 const port = 2000 || process.env.PORT;
 
-companies = (data) => {
+app.use(cors());
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    );
+    next();
+});
 
-    axios({
+// companies = (data) => {
 
-        url: "https://api-v3.igdb.com/companies",
-        method: 'POST',
-        headers: {
+//     axios({
 
-            Accept: "application/json",
-            "user-key": API_KEY
-        },
+//         url: "https://api-v3.igdb.com/companies",
+//         method: 'POST',
+//         headers: {
 
-        data: `fields *; where id= (${data.toString()});`
+//             Accept: "application/json",
+//             "user-key": API_KEY
+//         },
 
-    }).then(result => {
+//         data: `fields *; where id= (${data.toString()});`
 
-        gamez.companies = result.data.name;
+//     }).then(result => {
 
-    }).catch(error => {
+//         gamez.companies = result.data.name;
+
+//     }).catch(error => {
 
 
-    });
-}
-
-app.get('/', function(req, res){
-    res.redirect('/games');
- });
+//     });
+// }
 
 //get game from API and add to database
 app.get('/create', (req, res) => {
