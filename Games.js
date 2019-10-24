@@ -5,19 +5,7 @@ const Game = require('./database');
 
 const API_KEY = "5865e092b3bb33ca3807c709e8f3abeb";
 
-//const path = require('path'); //---heroku---
-//const cors = require("cors");
 const port = 2000 || process.env.PORT;
-
-// app.use(cors());
-// app.use(function (req, res, next) {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header(
-//         'Access-Control-Allow-Headers',
-//         'Origin, X-Requested-With, Content-Type, Accept'
-//     );
-//     next();
-// });
 
 companies = (data) => {
 
@@ -42,6 +30,10 @@ companies = (data) => {
 
     });
 }
+
+app.get('/', function(req, res){
+    res.redirect('/games');
+ });
 
 //get game from API and add to database
 app.get('/create', (req, res) => {
